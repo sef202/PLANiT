@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
-import 'task.dart';
+import 'register.dart';
 
 void main() => runApp(MyApp());
 
@@ -166,12 +166,12 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildCreateAcct() {                    // function for building create account button
     return GestureDetector(
-      onTap: () => print('Create Account button pressed'),
+      onTap: createacc,
       child: RichText(
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Don\'t have a login?  ',
+              text: "Don't have a login?  ",
               style: TextStyle(
                 color: Colors.black87,
                 fontSize: 18.0,
