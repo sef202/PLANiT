@@ -5,12 +5,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Home Page'),),
-      floatingActionButton: FloatingActionButton(
-        onPressed: task,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+        appBar: AppBar(title: Text('Home Page'),),     floatingActionButton: FloatingActionButton(
+    onPressed: task,
+    tooltip: 'Increment',
+    child: Icon(Icons.add),
+    ),
     );
   }
 }
