@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'task.dart';
+import 'home.dart';
 import 'classes.dart';
+import 'schedule.dart';
 
 void homepage() => runApp(MyApp());
 
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'PLANiT'),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -46,12 +48,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   int _selectedPage = 0;
   final _pageOptions = [
-    MyHomePage(),
+    HomePage(),
     ClassPage(),
+    SchedulePage(),
   ];
 
   @override
@@ -63,33 +64,29 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+
       body: _pageOptions[_selectedPage],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedPage,
-        onTap: (int index) {
-          setState(() {
-            _selectedPage = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.description),
-            title: Text('Classes'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.schedule),
-            title: Text('Schedule'),
-          ),
-        ]
+          currentIndex: _selectedPage,
+          onTap: (int index) {
+            setState(() {
+              _selectedPage = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Home'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.description),
+              title: Text('Classes'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.schedule),
+              title: Text('Schedule'),
+            ),
+          ]
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: task,
