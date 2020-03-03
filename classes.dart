@@ -23,7 +23,11 @@ class ClassPageState extends State<ClassPage> {
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.add), onPressed: () {
-                  Navigator.of(context).pushNamed("/AddClassPage");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddClassPage()),
+                  );
+                  //Navigator.of(context).pushNamed("/AddClassPage");
             })
           ],
         ),
