@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:planit/main.dart';
+import 'main.dart';
+import 'home_page.dart';
+import 'register.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -111,12 +113,12 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
         alignment: Alignment.centerRight,
         child: FlatButton(
-            onPressed: () {
-              Navigator.push( // navigates to forgot password screen
-                context,
-                MaterialPageRoute(builder: (context) => ForgotPass()),
-              );
-            },
+            onPressed: () => print('Forgot password button pressed'), //{
+              //Navigator.push( // navigates to forgot password screen
+               // context,
+               // MaterialPageRoute(builder: (context) => ForgotPass()),
+             // );
+            //},
             padding: EdgeInsets.only(right: 0.0),
             child: Text(
               'Forgot Password?',
@@ -166,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () {
         Navigator.push( // navigates to create account screen
           context,
-          MaterialPageRoute(builder: (context) => CreateAccount()),
+          MaterialPageRoute(builder: (context) => Register()),
         );
       },
        child: RichText(
