@@ -139,10 +139,7 @@ class _LoginPageState extends State<LoginPage> {
         child: RaisedButton(
           elevation: 5.0,
           onPressed: () {
-            Navigator.push( // navigates to homepage screen
-              context,
-              MaterialPageRoute(builder: (context) => MyHomePage()),
-            );
+            Navigator.pushReplacementNamed(context, "/login");
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(

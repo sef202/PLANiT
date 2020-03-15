@@ -10,8 +10,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'PLANit Login Screen',
       home: LoginPage(),
+      routes: {
+        "/login": (_) => new MyHomePage(),
+        "/logout": (_) => new LoginPage(),
+      },
     );
   }
 }
