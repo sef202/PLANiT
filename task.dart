@@ -11,8 +11,7 @@ class TodoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
         title: 'Tasks List',
-        home: new TodoList()
-
+        home: new TodoList(),
     );
   }
 }
@@ -157,7 +156,9 @@ class TodoListState extends State<TodoList> {
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.close),
-            onPressed:  homepage,
+            onPressed:  () {
+              Navigator.pushReplacementNamed(context, "/exitTask");
+            },
           ),
         ],
         leading: new Container(),

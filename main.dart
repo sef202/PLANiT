@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:menu/task.dart';
 import 'login_screen.dart';
 import 'home_page.dart';
 import 'register.dart';
@@ -16,6 +17,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/login": (_) => new MyHomePage(),
         "/logout": (_) => new LoginPage(),
+        "/newTask": (_) => new TodoList(),
+        "/exitTask": (_) => new MyHomePage(),
       },
     );
   }

@@ -34,7 +34,9 @@ class HomePage extends StatelessWidget {
           ],
         ),
       floatingActionButton: FloatingActionButton(
-        onPressed: task,
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, "/newTask");
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
