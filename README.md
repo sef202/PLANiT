@@ -19,6 +19,9 @@
 8. Open the pubspec.yaml file and click on "Packages get" to install all the packages in dependencies (this should solve any errors with files that have a red underline)
 9. Open Android emulator and run
    - May receive some kind of java error in console, but it will still continue opening the app.
+10. App should have a working Create Account, Login, and Sign Out authentication. (As well as all the other working functions from sprint 1)
+    - You can check if an account has been created by going to our [Firebase authentication userbase](https://console.firebase.google.com/u/2/project/planit-573b1/authentication/users)
+    - More info about authentication in the file descriptions below. (see authenticate\\ files and services\\auth.dart)
    
 **Note:** App will probably open on homepage because of the user authentication state that was set when I uploaded the files, but if you go to the top right menu button and click sign out, then restart the app, it should reload back into the login page. If you login and restart the app without signing out, it will reload to the homepage because it checks if a user is still signed in.
 
@@ -36,6 +39,8 @@ App currently following the structure below:
 ![planit-structure](https://user-images.githubusercontent.com/43505612/77134450-465ba700-6a24-11ea-9228-188ac2cfbc91.png)
 
 **authenticate\register.dart:** Builds widget for creating an account. Takes input email and password to create an account entry in Firebase. If account is created, user is redirected to app homepage. Referenced [Flutter & Firebase Register With Email & Password #12](https://www.youtube.com/watch?v=jl5E0UfAGVs&list=PL4cUxeGkcC9j--TKIdkb3ISfRbJeJYQwC&index=12)
+- You can check if the account has been created in our [Firebase Authentication userbase](https://console.firebase.google.com/u/2/project/planit-573b1/authentication/users).
+  - Once the user enters valid information in the Create Account text field and clicks 'Create Account', they are redirected to app's homepage. After you reach the homepage, you can refresh the Firebase Authentication list and you should see the email that was used to sign up.
 - **TO DO:** (not actually to do, just ideas to implement for the future) 
   - First name, last name, and username fields do not do anything (they are not stored/recorded in any variable), but the text fields for these items are currently set to be required to fill in for account to be created.
   - Display a brief message (notification style?) that account was successfully created.
