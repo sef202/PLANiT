@@ -3,10 +3,25 @@
 3/19/2020: Setup email/password authentication methods in Firebase for ***Android*** app. Modified dependecies in build.gradle and pubspec.yaml to connect Firebase authentication with flutter app.
 - Make sure to download and use all files in the **android** folder and **pubspec.yaml** to have proper settings that connects Firebase authentication to the flutter app.
   - **android\app\google-services.json:** This is the config file I downloaded from Firebase to enable and connect the Email and Password authentication method.
-- Package name on Firebase is set as "_com.cpsc.planit_sprint2_". This should match the "_applicationID_" (around line 41) in android\app\build.gradle
-
+  
 **TO DO:** (before 3/26/2020)
 - Implement forgot password
+  
+### HOW TO SETUP NEW FLUTTER PROJECT TO COPY THIS BRANCH'S WORKING PLANIT APP WITH WORKING FIREBASE AUTHENTICATION
+1. Download ZIP from github and extract
+2. Create new flutter project
+3. Select Flutter Application > Next
+4. Project name: planit_sprint2 > Next
+5. Package name: com.cpsc.planit_sprint2
+6. Finish and open project in new window
+7. Copy files from extracted ZIP folder to project root directory
+   - This should overwrite the default android\\ folder, pubspec.yaml, and lib\main.dart files
+8. Open the pubspec.yaml file and click on "Packages get" to install all the packages in dependencies (this should solve any errors with files that have a red underline)
+9. Open Android emulator and run
+   - May receive some kind of java error in console, but it will still continue opening the app.
+   
+**Note:** App will probably open on homepage because of the user authentication state that was set when I uploaded the files, but if you go to the top right menu button and click sign out, then restart the app, it should reload back into the login page. If you login and restart the app without signing out, it will reload to the homepage because it checks if a user is still signed in.
+
 
 ## File descriptions (all files below found in lib folder)
 
