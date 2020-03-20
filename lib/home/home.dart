@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:planit_sprint2/services/auth.dart';
-import './task.dart';
-import 'package:planit_sprint2/authenticate/login_screen.dart';
-import 'package:planit_sprint2/main.dart';
 
 class MenuOptions {
   static const String SignOut = 'Sign out';
@@ -53,7 +50,7 @@ class HomePage extends StatelessWidget {
   }
 
   //function for menu choices on popup menu button
-  void choiceAction(String choice, BuildContext context) async {
+  void choiceAction(String choice, BuildContext context) {
     if (choice == MenuOptions.SignOut) {
       signOutUser(context);
     }

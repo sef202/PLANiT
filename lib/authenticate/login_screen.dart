@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:planit_sprint2/services/auth.dart';
-import '../main.dart';
-import '../home/home_page.dart';
 import 'register.dart';
 
 class LoginPage extends StatefulWidget {
