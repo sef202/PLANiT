@@ -1,6 +1,6 @@
 # PLANiT
 
-**3/26/2020:** Implemented forgot password functionality. Added authenticate\password_reset file description below.
+**3/21/2020:** Implemented forgot password functionality. Added authenticate\password_reset file description below.
 
 **3/19/2020:** Setup email/password authentication methods in Firebase for ***Android*** app. Modified dependecies in build.gradle and pubspec.yaml to connect Firebase authentication with flutter app.
 - Make sure to download and use all files in the **android** folder and **pubspec.yaml** to have proper settings that connects Firebase authentication to the flutter app.
