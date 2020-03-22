@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:planit_sprint2/services/auth.dart';
 import 'register.dart';
+import 'password_reset.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   String email = '';
   String password = '';
 
-  Widget _buildUsername() {           // function for building/styling username field
+  Widget _buildUsername() {         // widget for building/styling username text field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -75,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildPassword() {            // function for building/styling password field
+  Widget _buildPassword() {         // widget for building/styling password text field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -136,12 +137,12 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
         alignment: Alignment.centerRight,
         child: FlatButton(
-            onPressed: () => print('Forgot password button pressed'), //{
-              //Navigator.push( // navigates to forgot password screen
-               // context,
-               // MaterialPageRoute(builder: (context) => ForgotPass()),
-             // );
-            //},
+            onPressed: () {
+              Navigator.push( // navigates to forgot password screen
+                context,
+                MaterialPageRoute(builder: (context) => ForgotPass()),
+              );
+            },
             padding: EdgeInsets.only(right: 0.0),
             child: Text(
               'Forgot Password?',
@@ -168,7 +169,6 @@ class _LoginPageState extends State<LoginPage> {
                 setState(() => error = 'Invalid credentials. Please try again.');
               }
             }
-//            Navigator.pushReplacementNamed(context, "/login");
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
@@ -222,6 +222,18 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget showError() {
+    return Text(
+      error,
+      style: TextStyle(
+        color: Colors.red,
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'OpenSans',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(
                   horizontal: 40.0,
-                  vertical: 260.0,
+                  vertical: 240.0,
                 ),
                 child: Form(
                   key: _formKey,
@@ -270,21 +282,11 @@ class _LoginPageState extends State<LoginPage> {
                       _buildUsername(),      // calls function to build username widget
                       SizedBox(height: 30.0),
                       _buildPassword(),
-                      //_buildForgotPassword(),
+                      _buildForgotPassword(),
                       _buildLoginBtn(),
                       _buildCreateAcct(),
-
                       SizedBox(height: 30.0),
-                      Text(
-                        error,
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-
+                      showError(),
                     ],
                   ),
                 ),
