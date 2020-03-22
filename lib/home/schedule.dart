@@ -128,15 +128,15 @@ class _MySchedulePageState extends State<MySchedulePage> with TickerProviderStat
       holidays: _holidays,
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
-        selectedColor: Colors.deepOrange[400],
-        todayColor: Colors.deepOrange[200],
+        selectedColor: Colors.blueAccent[400],
+        todayColor: Colors.blue[200],
         markersColor: Colors.brown[700],
         outsideDaysVisible: false,
       ),
       headerStyle: HeaderStyle(
         formatButtonTextStyle: TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
         formatButtonDecoration: BoxDecoration(
-          color: Colors.deepOrange[400],
+          color: Colors.blueAccent[400],
           borderRadius: BorderRadius.circular(16.0),
         ),
       ),
@@ -148,7 +148,7 @@ class _MySchedulePageState extends State<MySchedulePage> with TickerProviderStat
   // More advanced TableCalendar configuration (using Builders & Styles)
   Widget _buildTableCalendarWithBuilders() {
     return TableCalendar(
-      locale: 'pl_PL',
+      locale: 'en_US',
       calendarController: _calendarController,
       events: _events,
       holidays: _holidays,
@@ -304,7 +304,7 @@ class _MySchedulePageState extends State<MySchedulePage> with TickerProviderStat
         ),
         const SizedBox(height: 8.0),
         RaisedButton(
-          child: Text('Set day ${dateTime.day}-${dateTime.month}-${dateTime.year}'),
+          child: Text('Today ${dateTime.day}-${dateTime.month}-${dateTime.year}'),
           onPressed: () {
             _calendarController.setSelectedDay(
               DateTime(dateTime.year, dateTime.month, dateTime.day),
@@ -335,17 +335,6 @@ class _MySchedulePageState extends State<MySchedulePage> with TickerProviderStat
   }
 }
 @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(title: Text('Home Page'),),     floatingActionButton: FloatingActionButton(
-    onPressed: task,
-    tooltip: 'Increment',
-    child: Icon(Icons.add),
-  ),
-  );
-}
-
-
 class SchedulePage extends StatelessWidget {
   // This widget is the root of your application.
   @override
