@@ -57,5 +57,15 @@ class AuthService {
     }
   }
 
+  // forgot password
+  Future sendPasswordResetEmail(String email, BuildContext context) async {
+    try {
+      return await _auth.sendPasswordResetEmail(email: email);
+    } catch(e) {
+      print(e.toString());
+      return 'error';
+    }
+  }
+
 }
 
