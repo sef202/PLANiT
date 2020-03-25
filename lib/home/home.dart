@@ -53,13 +53,13 @@ class HomePage extends StatelessWidget {
             ),
             Text("Agenda For Today", style:TextStyle(color:Colors.black, fontSize: 24), textAlign: TextAlign.left),
             StreamBuilder(
-              stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).where('date', isEqualTo: "${DateTime.now().toLocal()}".split(' ')[0]).snapshots(),
-              builder: (context, snapshot) {
+            stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).snapshots(),
+            builder: (context, snapshot) {
                 return
                   ConstrainedBox(
                       constraints: new BoxConstraints(
                         minHeight: 180,
-                        maxHeight: 180,
+                        maxHeight: 293,
                       ),
                       child:ListView.builder(
                           itemCount: snapshot.data.documents.length,
