@@ -16,17 +16,14 @@ class TaskList extends StatefulWidget{
 
 class _TaskListState extends State<TaskList>{
 
-
   @override
   Widget build(BuildContext context){
-
     final user = Provider.of<User>(context);
 
   return new Scaffold(
     body: StreamBuilder(
       stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).snapshots(),
       builder: (context, snapshot) {
-
         return ListView.builder(
           itemCount: snapshot.data.documents.length,
           itemBuilder: (context, index) {

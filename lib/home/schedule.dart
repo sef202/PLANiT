@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import './task.dart';
-import './home.dart';
-import './classes.dart';
-
+import 'package:planit_sprint2/services/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:planit_sprint2/model/task_model.dart';
+import 'package:provider/provider.dart';
+import 'package:planit_sprint2/home/TaskDetail.dart';
+import 'package:planit_sprint2/authenticate/user_model.dart';
+import 'task.dart';
 
 
 final Map<DateTime, List> _holidays = {
@@ -37,6 +40,7 @@ class MySchedulePage extends StatefulWidget {
   MySchedulePage({Key key, this.title}) : super(key: key);
 
   final String title;
+  final AuthService _auth = AuthService();
 
   @override
   _MySchedulePageState createState() => _MySchedulePageState();
@@ -48,6 +52,8 @@ class _MySchedulePageState extends State<MySchedulePage> with TickerProviderStat
   AnimationController _animationController;
   CalendarController _calendarController;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -55,21 +61,21 @@ class _MySchedulePageState extends State<MySchedulePage> with TickerProviderStat
 
     _events = {
 
-      _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
-      _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
-      _selectedDay.subtract(Duration(days: 20)): ['Event A2', 'Event B2', 'Event C2', 'Event D2'],
-      _selectedDay.subtract(Duration(days: 16)): ['Event A3', 'Event B3'],
-      _selectedDay.subtract(Duration(days: 10)): ['Event A4', 'Event B4', 'Event C4'],
-      _selectedDay.subtract(Duration(days: 4)): ['Event A5', 'Event B5', 'Event C5'],
-      _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
-      _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
-      _selectedDay.add(Duration(days: 7)): ['Event A10', 'Event B10', 'Event C10'],
-      _selectedDay.add(Duration(days: 11)): ['Event A11', 'Event B11'],
-      _selectedDay.add(Duration(days: 17)): ['Event A12', 'Event B12', 'Event C12', 'Event D12'],
-      _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
-      _selectedDay.add(Duration(days: 26)): ['Event A14', 'Event B14', 'Event C14'],
+      _selectedDay.subtract(Duration(days: 30)): ['Class A0', 'Class B0', 'Class C0'],
+      _selectedDay.subtract(Duration(days: 27)): ['Class A1'],
+      _selectedDay.subtract(Duration(days: 20)): ['Class A2', 'Class B2', 'Class C2', 'Class D2'],
+      _selectedDay.subtract(Duration(days: 16)): ['Class A3', 'Class B3'],
+      _selectedDay.subtract(Duration(days: 10)): ['Class A4', 'Class B4', 'Class C4'],
+      _selectedDay.subtract(Duration(days: 4)): ['Class A5', 'Class B5', 'Class C5'],
+      _selectedDay.subtract(Duration(days: 2)): ['Class A6', 'Class B6'],
+      _selectedDay: ['Class A7', 'Class B7', 'Class C7', 'Class D7'],
+      _selectedDay.add(Duration(days: 1)): ['Class A8', 'Class B8', 'Class C8', 'Class D8'],
+      _selectedDay.add(Duration(days: 3)): Set.from(['Class A9', 'Class A9', 'Class B9']).toList(),
+      _selectedDay.add(Duration(days: 7)): ['Class A10', 'Class B10', 'Class C10'],
+      _selectedDay.add(Duration(days: 11)): ['Class A11', 'Class B11'],
+      _selectedDay.add(Duration(days: 17)): ['Class A12', 'Class B12', 'Class C12', 'Class D12'],
+      _selectedDay.add(Duration(days: 22)): ['Class A13', 'Class B13'],
+      _selectedDay.add(Duration(days: 26)): ['Class A14', 'Class B14', 'Class C14'],
     };
 
     _selectedEvents = _events[_selectedDay] ?? [];

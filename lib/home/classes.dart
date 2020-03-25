@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import './upload.dart';
+
 
 void main() {
   runApp(new MaterialApp(
@@ -67,6 +70,14 @@ class ClassPageState extends State<ClassPage> {
             ),
           ]
         ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => image()),
+            );
+          },
+        child: Icon(Icons.add_a_photo)
+      ),
     );
   }
 }
@@ -269,3 +280,4 @@ class _AddClassPageState extends State<AddClassPage> {
     );
   }
 }
+
