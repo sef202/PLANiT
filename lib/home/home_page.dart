@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './home.dart';
-import './classes.dart';
+import 'myClasses.dart';
 import './schedule.dart';
 import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedPage = 0;
   final _pageOptions = [
     HomePage(),
-    ClassPage(),
+    MyClassesApp(),
     SchedulePage(),
   ];
 
