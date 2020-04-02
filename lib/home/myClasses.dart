@@ -62,29 +62,6 @@ class MyClassesAppState extends State<MyClassesApp>{
                           crossAxisAlignment: CrossAxisAlignment.center,
                           //mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-//                            GestureDetector(
-//                              onTap: () async {
-//                                await Firestore.instance.collection('classes').document(course.className).setData(
-//                                    {
-//                                      'User': user.uid,
-//                                      'className': course.className,
-//                                      'description':  course.description,
-//                                      'day': course.day,
-//                                      'startTime': course.startTime,
-//                                      'endTime': course.endTime,
-//                                      'room': course.room,
-//                                      'instructor': course.instructor,
-//                                      'done': !course.done
-//                                    });
-//                              },
-//                              child: course.done
-//                                  ? Icon(Icons.check_circle, color: Colors.white)
-//                                  : Icon(Icons.radio_button_unchecked, color: Colors.white),
-//                            ),
-//                            SizedBox(width: 10),
-
-//                            Text(course.className, style:TextStyle(color:Colors.white, fontSize: 20)),
-
                             Expanded(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
