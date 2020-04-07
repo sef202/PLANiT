@@ -78,6 +78,7 @@ class ClassPageState extends State<ClassPage> {
           },
         child: Icon(Icons.add_a_photo)
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
