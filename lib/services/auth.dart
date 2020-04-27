@@ -4,6 +4,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
+import 'package:planit_sprint2/services/database.dart';
 
 class AuthService {
 
@@ -39,6 +40,9 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
       Navigator.pushReplacementNamed(context, "/register");
+
+      //create a new document for the user with the uid
+      //await DatabaseService(uid: user.uid).updateUserData('exam', '0000', 'something');
       return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
@@ -56,7 +60,6 @@ class AuthService {
       return null;
     }
   }
-
   // forgot password
   Future sendPasswordResetEmail(String email, BuildContext context) async {
     try {
@@ -68,4 +71,3 @@ class AuthService {
   }
 
 }
-

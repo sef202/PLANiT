@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import './home.dart';
-import './classes.dart';
+import 'myClasses.dart';
 import './schedule.dart';
+import 'package:planit_sprint2/services/database.dart';
+import 'package:provider/provider.dart';
+import 'package:planit_sprint2/authenticate/user_model.dart';
+
+
 
 void homepage() => runApp(MyApp());
 
@@ -50,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedPage = 0;
   final _pageOptions = [
     HomePage(),
-    ClassPage(),
+    MyClassesApp(),
     SchedulePage(),
   ];
 
@@ -62,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    final user = Provider.of<User>(context);
     return Scaffold(
 
       body: _pageOptions[_selectedPage],
@@ -90,3 +96,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+

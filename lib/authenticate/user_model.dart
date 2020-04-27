@@ -9,3 +9,14 @@ class User {
   User({ this.uid });
 
 }
+
+class UserData {
+
+  final String uid;
+  final String tasks;
+  final String date;
+  final String description;
+
+  UserData({this.uid, this.tasks, this.date, this.description});
+
+}

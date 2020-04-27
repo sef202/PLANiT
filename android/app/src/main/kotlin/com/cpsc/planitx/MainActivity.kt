@@ -1,4 +1,4 @@
-package com.cpsc.planit_sprint2
+package com.cpsc.planitx
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
