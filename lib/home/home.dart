@@ -1,11 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:planit_sprint2/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planit_sprint2/model/task_model.dart';
 import 'package:provider/provider.dart';
-import 'package:planit_sprint2/home/TaskDetail.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
-import 'task.dart';
 
 class MenuOptions {
   static const String SignOut = 'Sign out';
@@ -20,6 +19,9 @@ class HomePage extends StatelessWidget {
 
   final AuthService _auth = AuthService();
 
+  String _timeUntil; // time until next task is due
+
+  Timer _timer;
 
   @override
   Widget build(BuildContext context) {
@@ -41,101 +43,105 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-          height: double.infinity,
+      body: ListView(
+          children: <Widget>[
+            Container(
+                child: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        //Add calendar here
+                        ConstrainedBox(
+                          constraints: new BoxConstraints(
+                            minHeight: 280,
+                            maxHeight: 280,
+                          ),
+                        ),
+                        Text("Agenda For Today", style:TextStyle(color:Colors.black, fontSize: 24), textAlign: TextAlign.left),
+                        StreamBuilder(
+                        stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).snapshots(),
+                        builder: (context, snapshot) {
+                          if(snapshot.data == null) return Container();
+                            return
+                              ConstrainedBox(
+                                  constraints: new BoxConstraints(
+                                    minHeight: 180,
+                                    maxHeight: 293,
+                                  ),
+                                  child:ListView.builder(
+                                      itemCount: snapshot.data.documents.length,
+                                      itemBuilder: (context, index) {
+                                        final DocumentSnapshot document = snapshot.data.documents[index];
+                                        Task task = new Task(
+                                          taskName: document['taskName'] ?? 'name',
+                                          date: document['date'] ?? 'date',
+                                          description: document['description'] ?? 'description',
+                                          done: document['done'] ?? false,
+                                        );
+                                        return Padding(
+                                          padding: EdgeInsets.only(top: 8.0),
+                                          child: Card(
+                                              margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+                                              color: Colors.blue[200],
+                                              child: InkWell (
+                                                onTap: () {
+                                                  Navigator.pushNamed(context, '/taskDetail', arguments: task);
+                                                },
+                                                child: Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: <Widget>[
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        await Firestore.instance.collection('plan').document(task.taskName).setData(
+                                                            {
+                                                              'User': user.uid,
+                                                              'taskName': task.taskName,
+                                                              'date': task.date,
+                                                              'description':  task.description,
+                                                              'done': !task.done
+                                                            });
+                                                      },
+                                                      child: task.done
+                                                          ? Icon(Icons.check_circle, color: Colors.white)
+                                                          : Icon(Icons.radio_button_unchecked, color: Colors.white),
+                                                    ),
+                                                    SizedBox(width: 50),
 
-            child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    //Add calendar here
-                    ConstrainedBox(
-                      constraints: new BoxConstraints(
-                        minHeight: 280,
-                        maxHeight: 280,
-                      ),
-                    ),
-                    Text("Agenda For Today", style:TextStyle(color:Colors.black, fontSize: 24), textAlign: TextAlign.left),
-                    StreamBuilder(
-                    stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).snapshots(),
-                    builder: (context, snapshot) {
-                      if(snapshot.data == null) return Container();
-                        return
-                          ConstrainedBox(
-                              constraints: new BoxConstraints(
-                                minHeight: 180,
-                                maxHeight: 293,
-                              ),
-                              child:ListView.builder(
-                                  itemCount: snapshot.data.documents.length,
-                                  itemBuilder: (context, index) {
-                                    final DocumentSnapshot document = snapshot.data.documents[index];
-                                    Task task = new Task(
-                                      taskName: document['taskName'] ?? 'name',
-                                      date: document['date'] ?? 'date',
-                                      description: document['description'] ?? 'description',
-                                      done: document['done'] ?? false,
-                                    );
-                                    return Padding(
-                                      padding: EdgeInsets.only(top: 8.0),
-                                      child: Card(
-                                          margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-                                          color: Colors.blue[200],
-                                          child: InkWell (
-                                            onTap: () {
-                                              Navigator.pushNamed(context, '/taskDetail', arguments: task);
-                                            },
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: <Widget>[
-                                                GestureDetector(
-                                                  onTap: () async {
-                                                    await Firestore.instance.collection('plan').document(task.taskName).setData(
-                                                        {
-                                                          'User': user.uid,
-                                                          'taskName': task.taskName,
-                                                          'date': task.date,
-                                                          'description':  task.description,
-                                                          'done': !task.done
-                                                        });
-                                                  },
-                                                  child: task.done
-                                                      ? Icon(Icons.check_circle, color: Colors.white)
-                                                      : Icon(Icons.radio_button_unchecked, color: Colors.white),
+                                                    Text(task.taskName, style:TextStyle(color:Colors.white, fontSize: 20)),
+
+                                                  ],
                                                 ),
-                                                SizedBox(width: 8),
-
-                                                Text(task.taskName, style:TextStyle(color:Colors.white, fontSize: 20)),
-
-                                              ],
-                                            ),
-                                          )
-                                      ),
-                                    );
-                                  }
-                              )
-                          );
-                      },
+                                              )
+                                          ),
+                                        );
+                                      }
+                                  )
+                              );
+                          },
+                        ),
+                      ],
                     ),
-                  ]
+                ),
+            ),
 
+            Container( // container for countdown timer
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: 280,
+                      maxHeight: 280,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, "/TaskPage");
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
+
+          ],
+        ),
+      );
   }
 
   // function to sign out
