@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'myAddClasses.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:planit_sprint2/model/course_model.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'classDetail.dart';
-import 'upload.dart';
-
 
 
 class MyClassesApp extends StatefulWidget{

@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:planit_sprint2/model/course_model.dart';
 import 'package:provider/provider.dart';
-import 'editClass.dart';
-
-
-import 'myClasses.dart';
 
 
 class ClassDetail extends StatefulWidget {

@@ -6,10 +6,6 @@ import 'package:planit_sprint2/authenticate/user_class_model.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'home_page.dart';
-
-import 'myClasses.dart';
-
 class MyAddClasses extends StatefulWidget{
   @override
   createState() => new MyAddClassesState();

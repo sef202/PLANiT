@@ -16,6 +16,33 @@ class DatabaseService {
   final CollectionReference classesCollection = Firestore.instance.collection(
     'classes');
 
+  final Firestore _firestore = Firestore.instance;
+
+//  Future getUserInfo(String uid) async {
+//    User retval = User();
+//
+//    try {
+//
+//    } catch(e) {
+//  }
+
+  Future getCurrentTask(String taskName) async {
+    Task retVal = Task();
+
+    try {
+      DocumentSnapshot _docSnapshot = await _firestore
+          .collection("plan")
+          .document(taskName)
+          .get();
+      retVal.User = _docSnapshot.data["user"];
+      retVal.taskName = taskName;
+      retVal.date = _docSnapshot.data['date'];
+      retVal.description = _docSnapshot.data["description"];
+    } catch(e) {
+      print(e);
+    }
+  }
+
 
 
   Future updateTask(String taskName, String date, String description) async {

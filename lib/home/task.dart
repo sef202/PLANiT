@@ -1,22 +1,30 @@
 // Import MaterialApp and other widgets which we can use to quickly create a material app
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'addTask.dart';
 import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
 import 'task_list.dart';
 import 'package:planit_sprint2/model/task_model.dart';
+import 'package:planit_sprint2/home/task_list2.dart';
 
 class TodoList extends StatefulWidget {
   @override
-  createState() => new TodoListState();
+  _TodoListState createState() => new _TodoListState();
 }
 
-class TodoListState extends State<TodoList> {
+class _TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
+
+//    final tasks = Provider.of<List<Task>>(context);
+//
+//    return ListView.builder(
+//      itemCount: tasks.length,
+//      itemBuilder: (context, index) {
+//        return TaskTile(task: tasks[index]);
+//      },
+//    );
+
     return StreamProvider<List<Task>>.value(
         value: DatabaseService().plan,
         child: new Scaffold(

@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:planit_sprint2/model/task_model.dart';
 import 'package:provider/provider.dart';
-
-import 'task.dart';
-import 'EditTask.dart';
 
 class TaskDetail extends StatefulWidget {
   Task task;
@@ -57,7 +54,8 @@ class TaskDetailState extends State<TaskDetail>{
         ),
         Padding(
           padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-          child: Text(task.date,
+          child: Text(
+              DateFormat.yMEd().add_jm().format(task.date.toDate()), //task.date,
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontSize: 20, color: Colors.blueAccent, fontWeight: FontWeight.bold)),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import './home.dart';
 import 'myClasses.dart';
 import './schedule.dart';
-import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 

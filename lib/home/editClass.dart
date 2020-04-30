@@ -3,11 +3,8 @@ import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:planit_sprint2/authenticate/user_class_model.dart';
 import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
-//import 'package:planit_sprint2/model/task_model.dart';
 import 'package:planit_sprint2/model/course_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'myClasses.dart';
-import '../main.dart';
 
 
 class EditClass extends StatefulWidget {
