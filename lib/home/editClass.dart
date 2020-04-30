@@ -204,12 +204,12 @@ class EditClassState extends State<EditClass> {
                               {
                                 'User': user.uid,
                                 'className': course.className,
-                                'description':  _currentDescription,
-                                'day': "${selectedDate.toLocal()}".split(' ')[0],
-                                'startTime':  _currentStartTime,
-                                'endTime': _currentEndTime,
-                                'room': _currentRoom,
-                                'instructor': _currentInstructor,
+                                'description':  _currentDescription ?? course.description,
+                                'day': "${selectedDate.toLocal()}".split(' ')[0] ?? course.day,
+                                'startTime':  _currentStartTime ?? course.startTime,
+                                'endTime': _currentEndTime ?? course.endTime,
+                                'room': _currentRoom ?? course.room,
+                                'instructor': _currentInstructor ?? course.instructor,
                                 'done' : course.done
                               });
                           Navigator.pop(context);
