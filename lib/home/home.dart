@@ -26,7 +26,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthService _auth = AuthService();
-  FirebaseAuth _authUser = FirebaseAuth.instance;
 
   String _timeUntil; // time until next task is due
 
@@ -44,6 +43,7 @@ class _HomePageState extends State<HomePage> {
   @override
 //  void initState() {
 //    super.initState();
+//
 //    CurrentTask _currentTask = Provider.of<CurrentTask>(context, listen: false);
 //    _currentTask.updateStateFromDatabase(_currentTask.getCurrentTask.taskName);
 //    _startTimer(_currentTask);
