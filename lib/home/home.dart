@@ -1,14 +1,10 @@
-import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:planit_sprint2/model/currentTask.dart';
 import 'package:planit_sprint2/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planit_sprint2/model/task_model.dart';
-import 'package:planit_sprint2/services/database.dart';
-import 'package:planit_sprint2/services/timeLeft.dart';
 import 'package:provider/provider.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
+import 'dart:math' as math;
 
 class MenuOptions {
   static const String SignOut = 'Sign out';
@@ -24,30 +20,24 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   final AuthService _auth = AuthService();
 
-  String _timeUntil; // time until next task is due
+  AnimationController controller;
 
-  Timer _timer;
-
-  void _startTimer(CurrentTask currentTask) {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        _timeUntil = OurTimeLeft().timeLeft(currentTask.getCurrentTask.date.toDate());
-      });
-    });
+  String get timerString {
+    Duration duration = controller.duration * controller.value;
+    return '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
-
   @override
-//  void initState() {
-//    super.initState();
-//
-//    CurrentTask _currentTask = Provider.of<CurrentTask>(context, listen: false);
-//    _currentTask.updateStateFromDatabase(_currentTask.getCurrentTask.taskName);
-//    _startTimer(_currentTask);
-//  }
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1500),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,80 +73,120 @@ class _HomePageState extends State<HomePage> {
                       maxHeight: 280,
                     ),
                   ),
-                  Text("Agenda For Today", style:TextStyle(color:Colors.black, fontSize: 24), textAlign: TextAlign.left),
-                  StreamBuilder(
-                    stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).snapshots(),
-                    builder: (context, snapshot) {
-                      if(snapshot.data == null) return Container();
-                      return
-                        ConstrainedBox(
-                            constraints: new BoxConstraints(
-                              minHeight: 180,
-                              maxHeight: 293,
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 2.0,
+                          offset: Offset(0.0, 0.0),
+                        ),
+                      ],
+                    ),
+                      child: Align(
+                        alignment: FractionalOffset.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                                "Agenda For Today",
+                                style: TextStyle(
+                                    color:Colors.black,
+                                    fontSize: 24
+                                ),
                             ),
-                            child:ListView.builder(
-                                itemCount: snapshot.data.documents.length,
-                                itemBuilder: (context, index) {
-                                  final DocumentSnapshot document = snapshot.data.documents[index];
-                                  Task task = new Task(
-                                    taskName: document['taskName'] ?? 'name',
-                                    date: document.data['date'] ?? Timestamp.fromDate(DateTime.now()),
-                                    description: document['description'] ?? 'description',
-                                    done: document['done'] ?? false,
-                                  );
-                                  return Padding(
-                                    padding: EdgeInsets.only(top: 8.0),
-                                    child: Card(
-                                        margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-                                        color: Colors.blue[200],
-                                        child: InkWell (
-                                          onTap: () {
-                                            Navigator.pushNamed(context, '/taskDetail', arguments: task);
-                                          },
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  await Firestore.instance.collection('plan').document(task.taskName).setData(
-                                                      {
-                                                        'User': user.uid,
-                                                        'taskName': task.taskName,
-                                                        'date': task.date,
-                                                        'description':  task.description,
-                                                        'done': !task.done
-                                                      });
-                                                },
-                                                child: task.done
-                                                    ? Icon(Icons.check_circle, color: Colors.white)
-                                                    : Icon(Icons.radio_button_unchecked, color: Colors.white),
-                                              ),
-                                              SizedBox(width: 50),
+                          ],
+                        ),
+                      ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border(
+                        top: BorderSide(width: 1.0, color: Colors.black26),
+                        bottom: BorderSide(width: 1.0, color: Colors.black26),
+                      ),
+                    ),
+                    child: StreamBuilder(
+                      stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).snapshots(),
+                      builder: (context, snapshot) {
+                        if(snapshot.data == null) return Container();
+                        return
+                          ConstrainedBox(
+                              constraints: new BoxConstraints(
+                                minHeight: 180,
+                                maxHeight: 293,
+                              ),
+                              child:ListView.builder(
+                                  itemCount: snapshot.data.documents.length,
+                                  itemBuilder: (context, index) {
+                                    final DocumentSnapshot document = snapshot.data.documents[index];
+                                    Task task = new Task(
+                                      taskName: document['taskName'] ?? 'name',
+                                      date: document.data['date'] ?? Timestamp.fromDate(DateTime.now()),
+                                      description: document['description'] ?? 'description',
+                                      done: document['done'] ?? false,
+                                    );
+                                    return Padding(
+                                      padding: EdgeInsets.only(top: 8.0),
+                                      child: Card(
+                                          margin: EdgeInsets.fromLTRB(15.0, 6.0, 20.0, 0.0),
+                                          color: Colors.blue[200],
+                                          child: InkWell (
+                                            onTap: () {
+                                              Navigator.pushNamed(context, '/taskDetail', arguments: task);
+                                            },
+                                            child: Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    await Firestore.instance.collection('plan').document(task.taskName).setData(
+                                                        {
+                                                          'User': user.uid,
+                                                          'taskName': task.taskName,
+                                                          'date': task.date,
+                                                          'description':  task.description,
+                                                          'done': !task.done
+                                                        });
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(7.0),
+                                                    child: task.done
+                                                        ? Icon(Icons.check_circle, color: Colors.white)
+                                                        : Icon(Icons.radio_button_unchecked, color: Colors.white),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
 
-                                              Text(task.taskName, style:TextStyle(color:Colors.white, fontSize: 20)),
+                                                Text(task.taskName, style:TextStyle(color:Colors.white, fontSize: 18)),
 
-                                            ],
-                                          ),
-                                        )
-                                    ),
-                                  );
-                                }
-                            )
-                        );
-                    },
+                                              ],
+                                            ),
+                                          )
+                                      ),
+                                    );
+                                  }
+                              )
+                          );
+                      },
+                    ),
                   ),
                 ],
               ),
             ),
           ),
 
-          SizedBox(height: 40),
-          Container(              // container for countdown timer
+          SizedBox(height: 20),
+          Container(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
-                padding: EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0),
@@ -164,52 +194,61 @@ class _HomePageState extends State<HomePage> {
                     BoxShadow(
                       color: Colors.grey,
                       blurRadius: 5.0,
-                      offset: Offset(
-                        0.0,
-                        3.0,
-                      ),
+                      offset: Offset(0.0, 3.0),
                     ),
                   ],
                 ),
-                child: Column(
-                  //crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: <Widget>[
-                    Text(
-                      "Task name here",
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: Row(
+                    Align(
+                      alignment: FractionalOffset.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "Due In: ",
+                            "Study Timer",
                             style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.grey,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                height: 1.5,
+                                fontWeight: FontWeight.bold
                             ),
                           ),
-                          Expanded(
-                            child: Text(
-                              _timeUntil ?? "loading...",
-                              style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
+                          AnimatedBuilder(
+                            animation: controller,
+                            builder: (BuildContext context, Widget child) {
+                              return Text(
+                                timerString,
+                                style: TextStyle(
+                                    fontFamily: 'OpenSans',
+                                    fontSize: 30.0,
+                                    height: 1.2,
+                                    //fontWeight: FontWeight.bold
+                                ),
+                              );
+                            }),
                         ],
                       ),
                     ),
-                    RaisedButton(
-                      child: Text(
-                        "Finished Task",
-                        style: TextStyle(color: Colors.white),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(20.0, 90.0, 20.0, 20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          RaisedButton(
+                            child: AnimatedBuilder(
+                              animation: controller,
+                              builder: (BuildContext context, Widget child) {
+                                return Icon(controller.isAnimating ? Icons.pause : Icons.play_arrow);
+                              }),
+                            onPressed: () {
+                              if(controller.isAnimating) controller.stop();
+                              else { controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value); }
+                            },
+                          ),
+                        ],
                       ),
-                      onPressed: () => print("Finished Task button pressed!"),
                     ),
                   ],
                 ),
@@ -242,220 +281,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-//class HomePage extends StatelessWidget {
-//
-//  final AuthService _auth = AuthService();
-//
-//  String _timeUntil; // time until next task is due
-//
-//  Timer _timer;
-//
-//  void _startTimer(CurrentTask currentTask) {
-//    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-//      setState(() {
-//        _timeUntil = OurTimeLeft().timeLeft(currentTask.getCurrentTask.)
-//      });
-//    });
-//  }
-//
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//    CurrentTask _currentTask = Provider.of<CurrentTask>(context, listen: false);
-//    _currentTask.updateStateFromDatabase(_currentTask.getCurrentTask.date.toDate());
-//    _startTimer(_currentTask);
-//  }
-//
-//  Widget build(BuildContext context) {
-//    final user = Provider.of<User>(context);
-//    return Scaffold(
-//      appBar: AppBar(
-//        title: Text('Home Page'),
-//        actions: <Widget>[
-//          PopupMenuButton<String>(   // 3 dot menu button for sign out (add more options later?)
-//            onSelected: (choice) => choiceAction(choice, context),
-//            itemBuilder: (BuildContext context) {
-//              return MenuOptions.choices.map((String choice){
-//                return PopupMenuItem<String>(
-//                  value: choice,
-//                  child: Text(choice),
-//                );
-//              }).toList();
-//            },
-//          ),
-//        ],
-//      ),
-//      body: ListView(
-//          children: <Widget>[
-//            Container(
-//                child: SingleChildScrollView(
-//                  child: Column(
-//                      crossAxisAlignment: CrossAxisAlignment.start,
-//                      children: <Widget>[
-//                        //Add calendar here
-//                        ConstrainedBox(
-//                          constraints: new BoxConstraints(
-//                            minHeight: 280,
-//                            maxHeight: 280,
-//                          ),
-//                        ),
-//                        Text("Agenda For Today", style:TextStyle(color:Colors.black, fontSize: 24), textAlign: TextAlign.left),
-//                        StreamBuilder(
-//                        stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).snapshots(),
-//                        builder: (context, snapshot) {
-//                          if(snapshot.data == null) return Container();
-//                            return
-//                              ConstrainedBox(
-//                                  constraints: new BoxConstraints(
-//                                    minHeight: 180,
-//                                    maxHeight: 293,
-//                                  ),
-//                                  child:ListView.builder(
-//                                      itemCount: snapshot.data.documents.length,
-//                                      itemBuilder: (context, index) {
-//                                        final DocumentSnapshot document = snapshot.data.documents[index];
-//                                        Task task = new Task(
-//                                          taskName: document['taskName'] ?? 'name',
-//                                          date: document.data['date'] ?? Timestamp.fromDate(DateTime.now()),
-//                                          description: document['description'] ?? 'description',
-//                                          done: document['done'] ?? false,
-//                                        );
-//                                        return Padding(
-//                                          padding: EdgeInsets.only(top: 8.0),
-//                                          child: Card(
-//                                              margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-//                                              color: Colors.blue[200],
-//                                              child: InkWell (
-//                                                onTap: () {
-//                                                  Navigator.pushNamed(context, '/taskDetail', arguments: task);
-//                                                },
-//                                                child: Row(
-//                                                  crossAxisAlignment: CrossAxisAlignment.center,
-//                                                  //mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                                                  children: <Widget>[
-//                                                    GestureDetector(
-//                                                      onTap: () async {
-//                                                        await Firestore.instance.collection('plan').document(task.taskName).setData(
-//                                                            {
-//                                                              'User': user.uid,
-//                                                              'taskName': task.taskName,
-//                                                              'date': task.date,
-//                                                              'description':  task.description,
-//                                                              'done': !task.done
-//                                                            });
-//                                                      },
-//                                                      child: task.done
-//                                                          ? Icon(Icons.check_circle, color: Colors.white)
-//                                                          : Icon(Icons.radio_button_unchecked, color: Colors.white),
-//                                                    ),
-//                                                    SizedBox(width: 50),
-//
-//                                                    Text(task.taskName, style:TextStyle(color:Colors.white, fontSize: 20)),
-//
-//                                                  ],
-//                                                ),
-//                                              )
-//                                          ),
-//                                        );
-//                                      }
-//                                  )
-//                              );
-//                          },
-//                        ),
-//                      ],
-//                    ),
-//                ),
-//            ),
-//
-//            SizedBox(height: 40),
-//            Container(              // container for countdown timer
-//              child: Padding(
-//                padding: const EdgeInsets.all(20.0),
-//                child: Container(
-//                  padding: EdgeInsets.all(20.0),
-//                  decoration: BoxDecoration(
-//                    color: Colors.white,
-//                    borderRadius: BorderRadius.circular(20.0),
-//                    boxShadow: [
-//                      BoxShadow(
-//                        color: Colors.grey,
-//                        blurRadius: 5.0,
-//                        offset: Offset(
-//                          0.0,
-//                          3.0,
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  child: Column(
-//                    //crossAxisAlignment: CrossAxisAlignment.start,
-//                    children: <Widget>[
-//                      Text(
-//                        "Task name here",
-//                        style: TextStyle(
-//                          fontSize: 30,
-//                          color: Colors.grey,
-//                        ),
-//                      ),
-//                      Padding(
-//                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-//                        child: Row(
-//                          children: <Widget>[
-//                            Text(
-//                              "Due In: ",
-//                              style: TextStyle(
-//                                fontSize: 30,
-//                                color: Colors.grey,
-//                              ),
-//                            ),
-//                            Expanded(
-//                              child: Text(
-//                                _timeUntil ?? "loading...",
-//                                style: TextStyle(
-//                                  fontSize: 30,
-//                                  color: Colors.grey,
-//                                ),
-//                              ),
-//                            ),
-//                          ],
-//                        ),
-//                      ),
-//                      RaisedButton(
-//                        child: Text(
-//                          "Finished Task",
-//                          style: TextStyle(color: Colors.white),
-//                        ),
-//                        onPressed: () => print("Finished Task button pressed!"),
-//                      ),
-//                    ],
-//                  ),
-//                ),
-//              ),
-//            ),
-//
-//          ],
-//        ),
-//        floatingActionButton: FloatingActionButton(
-//          onPressed: () {
-//            Navigator.pushReplacementNamed(context, "/TaskPage");
-//          },
-//          tooltip: 'Increment',
-//          child: Icon(Icons.add),
-//        ),
-//      );
-//  }
-//
-//  // function to sign out
-//  void signOutUser(BuildContext context) async {
-//    await _auth.signOut(context);
-//  }
-//
-//  //function for menu choices on popup menu button
-//  void choiceAction(String choice, BuildContext context) {
-//    if (choice == MenuOptions.SignOut) {
-//      signOutUser(context);
-//    }
-//  }
-//}
