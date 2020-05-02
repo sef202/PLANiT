@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:planit_sprint2/home/TaskDetail.dart';
-import 'package:planit_sprint2/services/database.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:planit_sprint2/model/task_model.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
-
-import 'task.dart';
 
 
 class TaskList extends StatefulWidget{
@@ -18,6 +15,7 @@ class _TaskListState extends State<TaskList>{
 
   @override
   Widget build(BuildContext context){
+
     final user = Provider.of<User>(context);
 
   return new Scaffold(
@@ -31,44 +29,52 @@ class _TaskListState extends State<TaskList>{
             final DocumentSnapshot document = snapshot.data.documents[index];
             Task task = new Task(
               taskName: document['taskName'] ?? 'name',
-              date: document['date'] ?? 'date',
+              date: document.data['date'] ?? Timestamp.fromDate(DateTime.now()),   // Timestamp.fromDate(currentPhoneDate),
               description: document['description'] ?? 'description',
               done: document['done'] ?? false,
             );
             return Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 child: Card(
-                  margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+                  margin: EdgeInsets.fromLTRB(10.0, 6.0, 20.0, 0.0),
                   color: Colors.blue[200],
-                  child: InkWell (
-                      onTap: () {
-                        Navigator.pushNamed(context, '/taskDetail', arguments: task);
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () async {
-                              await Firestore.instance.collection('plan').document(task.taskName).setData(
-                                  {
-                                    'User': user.uid,
-                                    'taskName': task.taskName,
-                                    'date': task.date,
-                                    'description':  task.description,
-                                    'done': !task.done
-                                  });
-                            },
+                  child: ListTile (
+                    onTap: () {
+                      Navigator.pushNamed(context, '/taskDetail', arguments: task);
+                    },
+                    leading: GestureDetector(
+                          onTap: () async {
+                            await Firestore.instance.collection('plan').document(task.taskName).setData(
+                                {
+                                  'User': user.uid,
+                                  'taskName': task.taskName,
+                                  'date': task.date,
+                                  'description':  task.description,
+                                  'done': !task.done
+                                });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
                             child: task.done
                                 ? Icon(Icons.check_circle, color: Colors.white)
                                 : Icon(Icons.radio_button_unchecked, color: Colors.white),
                           ),
-                          SizedBox(width: 8),
-
-                        Text(task.taskName, style:TextStyle(color:Colors.white, fontSize: 20)),
-
-                        ],
+                    ),
+                    title: Text(
+                      task.taskName,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMEd().add_jm().format(task.date.toDate()),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
                   )
                 ),
             );
@@ -79,3 +85,4 @@ class _TaskListState extends State<TaskList>{
   );
   }
 }
+

@@ -3,7 +3,7 @@
 class User {
 
   // user property: uid - Firebase User ID
-  final String uid;
+  String uid;
 
   // sets uid property
   User({ this.uid });
@@ -12,10 +12,10 @@ class User {
 
 class UserData {
 
-  final String uid;
-  final String tasks;
-  final String date;
-  final String description;
+  String uid;
+  String tasks;
+  String date;
+  String description;
 
   UserData({this.uid, this.tasks, this.date, this.description});
 

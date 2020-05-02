@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'myAddClasses.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:planit_sprint2/model/course_model.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'classDetail.dart';
-import 'upload.dart';
-
 
 
 class MyClassesApp extends StatefulWidget{
@@ -52,22 +47,30 @@ class MyClassesAppState extends State<MyClassesApp>{
                   padding: EdgeInsets.only(top: 8.0),
                   child: Card(
                       margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-                      color: Colors.black,
+                      color: Colors.black87,
                       child: InkWell (
                         onTap: () {
                           Navigator.pushNamed(context, '/classDetail', arguments: course);
                         },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(course.className, style:TextStyle(color:Colors.white, fontSize: 20)),
-                                ]
+                              child: Padding(
+                                padding: const EdgeInsets.all(7.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        course.className,
+                                        style:TextStyle(
+                                            color:Colors.white,
+                                            fontSize: 20
+                                        )
+                                    ),
+                                  ]
+                                ),
                               ),
                             )
 

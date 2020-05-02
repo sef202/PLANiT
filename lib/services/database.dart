@@ -16,6 +16,7 @@ class DatabaseService {
   final CollectionReference classesCollection = Firestore.instance.collection(
     'classes');
 
+  final Firestore _firestore = Firestore.instance;
 
 
   Future updateTask(String taskName, String date, String description) async {

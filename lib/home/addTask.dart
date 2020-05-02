@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../main.dart';
-import 'task.dart';
 
 class AddTask extends StatefulWidget {
   @override
@@ -15,17 +14,25 @@ class AddTask extends StatefulWidget {
 class AddTaskState extends State<AddTask> {
   DateTime selectedDate = DateTime.now();
 
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await DatePicker.showDateTimePicker(context, showTitleActions: true);
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
       });
+    }
   }
+//  Future<Null> _selectDate(BuildContext context) async {
+//    final DateTime picked = await showDatePicker(
+//        context: context,
+//        initialDate: selectedDate,
+//        firstDate: DateTime(2015, 8),
+//        lastDate: DateTime(2101));
+//    if (picked != null && picked != selectedDate)
+//      setState(() {
+//        selectedDate = picked;
+//      });
+//  }
 
   String _currentTask;
   String _currentDescription;
@@ -48,7 +55,7 @@ class AddTaskState extends State<AddTask> {
             ),
             body: ListView(children: [
               Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+                padding: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
                 child: Text("Task Name",
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -67,17 +74,19 @@ class AddTaskState extends State<AddTask> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+                padding: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
                 child: Text("Due Date",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 24, fontWeight: FontWeight.bold)),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-                child: Text("${selectedDate.toLocal()}".split(' ')[0],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20, color: Colors.blueAccent)),
+                padding: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                child: Text(
+                  DateFormat.yMEd().add_jm().format(selectedDate),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, color: Colors.blueAccent)
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
@@ -87,7 +96,7 @@ class AddTaskState extends State<AddTask> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+                padding: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
                 child: Text("Description",
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -117,7 +126,7 @@ class AddTaskState extends State<AddTask> {
                               {
                                 'User': user.uid,
                                 'taskName': _currentTask,
-                                'date': "${selectedDate.toLocal()}".split(' ')[0],
+                                'date': Timestamp.fromDate(selectedDate), //"${selectedDate.toLocal()}".split(' ')[0],
                                 'description':  _currentDescription,
                                 'done': false
                               });

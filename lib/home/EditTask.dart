@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:planit_sprint2/model/task_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../main.dart';
-import 'task.dart';
 
 class EditTask extends StatefulWidget {
   Task task;
@@ -26,18 +25,15 @@ class EditTaskState extends State<EditTask> {
     this.task = task;
   }
 
-  DateTime selectedDate = DateTime.now();
+  //DateTime selectedDate = DateTime.now();
 
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await DatePicker.showDateTimePicker(context, showTitleActions: true);
+    if (picked != null && picked != task.date.toDate()) {
       setState(() {
-        selectedDate = picked;
+        task.date = Timestamp.fromDate(picked);
       });
+    }
   }
 
   String _currentTask;
@@ -77,7 +73,8 @@ class EditTaskState extends State<EditTask> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-                child: Text("${selectedDate.toLocal()}".split(' ')[0],
+                child: Text(
+                    DateFormat.yMEd().add_jm().format(task.date.toDate()),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 20, color: Colors.blueAccent)),
               ),
@@ -117,7 +114,7 @@ class EditTaskState extends State<EditTask> {
                               {
                                 'User': user.uid,
                                 'taskName': task.taskName,
-                                'date': "${selectedDate.toLocal()}".split(' ')[0],
+                                'date': Timestamp.fromDate(task.date.toDate()),
                                 'description':  _currentDescription,
                                 'done' : task.done
                               });

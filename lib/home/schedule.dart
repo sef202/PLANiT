@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planit_sprint2/services/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:planit_sprint2/model/task_model.dart';
-import 'package:provider/provider.dart';
-import 'package:planit_sprint2/home/TaskDetail.dart';
-import 'package:planit_sprint2/authenticate/user_model.dart';
-import 'task.dart';
 
 
 final Map<DateTime, List> _holidays = {
