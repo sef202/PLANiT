@@ -247,6 +247,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                               else { controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value); }
                             },
                           ),
+                          RaisedButton(
+                            child: AnimatedBuilder(
+                                animation: controller,
+                                builder: (BuildContext context, Widget child) {
+                                  return Icon(controller.isAnimating ? Icons.replay : Icons.replay);
+                                }),
+                            onPressed: () { controller.reset(); },
+                          ),
                         ],
                       ),
                     ),
