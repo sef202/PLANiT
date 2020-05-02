@@ -4,7 +4,6 @@ import 'package:planit_sprint2/services/database.dart';
 import 'package:provider/provider.dart';
 import 'task_list.dart';
 import 'package:planit_sprint2/model/task_model.dart';
-import 'package:planit_sprint2/home/task_list2.dart';
 
 class TodoList extends StatefulWidget {
   @override
