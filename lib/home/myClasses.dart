@@ -47,22 +47,30 @@ class MyClassesAppState extends State<MyClassesApp>{
                   padding: EdgeInsets.only(top: 8.0),
                   child: Card(
                       margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-                      color: Colors.black,
+                      color: Colors.black87,
                       child: InkWell (
                         onTap: () {
                           Navigator.pushNamed(context, '/classDetail', arguments: course);
                         },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(course.className, style:TextStyle(color:Colors.white, fontSize: 20)),
-                                ]
+                              child: Padding(
+                                padding: const EdgeInsets.all(7.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        course.className,
+                                        style:TextStyle(
+                                            color:Colors.white,
+                                            fontSize: 20
+                                        )
+                                    ),
+                                  ]
+                                ),
                               ),
                             )
 
