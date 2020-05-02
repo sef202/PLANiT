@@ -149,7 +149,7 @@ class ClassDetailState extends State<ClassDetail>{
                     top: 8.0, left: 16.0, right: 16.0),
                 child: RaisedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/editClass', arguments: course);
+                    Navigator.pushReplacementNamed(context, '/editClass', arguments: course);
                   },
                   child: Text('Edit'),
                   color: Colors.pink[400],
