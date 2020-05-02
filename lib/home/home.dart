@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:planit_sprint2/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planit_sprint2/model/task_model.dart';
@@ -137,15 +138,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                     decoration: BoxDecoration(
                       //borderRadius: BorderRadius.circular(20.0),
                       color: Colors.white,
-//                      border: Border(
-//                        top: BorderSide(width: 1.0, color: Colors.black26),
-//                        bottom: BorderSide(width: 1.0, color: Colors.black26),
-//                      ),
+                      border: Border(
+                        top: BorderSide(width: 1.0, color: Colors.black26),
+                        bottom: BorderSide(width: 1.0, color: Colors.black26),
+                      ),
                     ),
                     child: StreamBuilder(
-                      stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).snapshots(),
+                      stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid).
+                          where('date', isGreaterThan: Timestamp.now().toDate(), isLessThan: Timestamp.now().toDate().add(new Duration(days: 1))).
+                          snapshots(),
                       builder: (context, snapshot) {
-                        if(snapshot.data == null) return Container();
+                        if(snapshot.data == null) return ConstrainedBox(
+                            constraints: new BoxConstraints(
+                              minHeight: 180,
+                              maxHeight: 240,
+                            ),
+                        );
                         return
                           ConstrainedBox(
                               constraints: new BoxConstraints(
