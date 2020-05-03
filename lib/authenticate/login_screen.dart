@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
         Text(
           'Username',
           style: TextStyle(
-            color: Colors.black87,
+            color: Color(0xFF001f4d),
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.bold,
           ),
@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
         Container(                     // container for username box field
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: Color(0xFFF2F4F4),
+            color: Color(0xFFe6f0ff),
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow (
@@ -61,12 +61,12 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.only(top: 19.0),
                 child: Icon(
                   Icons.account_circle,
-                  color: Colors.black87,
+                  color: Color(0xFF001f4d),
                 ),
               ),
               hintText: 'Enter email address',
               hintStyle: TextStyle(
-                color: Colors.black12,
+                color: Colors.black26,
                 fontFamily: 'OpenSans',
               ),
             ),
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
         Text(
           'Password',
           style: TextStyle(
-            color: Colors.black87,
+            color: Color(0xFF001f4d),
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.bold,
           ),
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
         Container(                     // container for password box field
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: Color(0xFFF2F4F4),
+            color: Color(0xFFe6f0ff),
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow (
@@ -118,12 +118,12 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.only(top: 19.0),
                 child: Icon(
                   Icons.lock,
-                  color: Colors.black87,
+                  color: Color(0xFF001f4d),
                 ),
               ),
               hintText: 'Enter password',
               hintStyle: TextStyle(
-                color: Colors.black12,
+                color: Colors.black26,
                 fontFamily: 'OpenSans',
               ),
             ),
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Text(
               'Forgot Password?',
               style: TextStyle(
-                color: Colors.black87,
+                color: Color(0xFF001f4d),
                 fontFamily: 'OpenSans',
                 fontWeight: FontWeight.bold,
               ),
@@ -174,11 +174,11 @@ class _LoginPageState extends State<LoginPage> {
           shape: RoundedRectangleBorder(
             borderRadius:  BorderRadius.circular(30.0),
           ),
-          color: Colors.black87,
+          color: Color(0xFFe6f0ff),
           child: Text(
             'LOGIN',
             style: TextStyle(
-              color: Color(0xFFF2F4F4),
+              color: Color(0xFF1976D2),
               letterSpacing: 1.5,
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
@@ -192,10 +192,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildCreateAcct() {                    // function for building create account button
     return GestureDetector(
       onTap: () {
-        Navigator.push( // navigates to create account screen
-          context,
-          MaterialPageRoute(builder: (context) => Register()),
-        );
+        Navigator.pushReplacementNamed(context, "/createAcc");
       },
        child: RichText(
           text: TextSpan(
@@ -203,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
               TextSpan(
                 text: 'Don\'t have a login?  ',
                 style: TextStyle(
-                  color: Colors.black87,
+                  color: Color(0xFF001f4d),
                   fontSize: 18.0,
                   fontWeight: FontWeight.w400,
                 ),
@@ -211,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
               TextSpan(
                 text: 'Create Account',
                 style: TextStyle(
-                  color: Colors.black87,
+                  color: Color(0xFF001433),
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -247,10 +244,10 @@ class _LoginPageState extends State<LoginPage> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [ // colors for gradient background of login page
-                    Color(0xFFF2F4F4),
-                    Color(0xFFE5E8E8),
-                    Color(0xFFCCD1D1),
-                    Color(0xFFB2BABB)
+                    Color(0xFF64B5F0),
+                    Color(0xFF64B5F6),
+                    Color(0xFF2196F3),
+                    Color(0xFF1976D2)
                   ],
                   stops: [0.1, 0.4, 0.7, 0.9],
                 ),
@@ -262,22 +259,14 @@ class _LoginPageState extends State<LoginPage> {
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(
                   horizontal: 40.0,
-                  vertical: 240.0,
+                  vertical: 50.0,
                 ),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'PLANiT',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      Image.asset('lib/graphics/planit.png'),
                       SizedBox(height: 30.0),
                       _buildUsername(),      // calls function to build username widget
                       SizedBox(height: 30.0),

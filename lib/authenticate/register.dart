@@ -22,22 +22,43 @@ class _RegisterState extends State<Register>{
   Widget build(BuildContext context) {
    return new Scaffold(
      resizeToAvoidBottomPadding: false,
-     body: Column(crossAxisAlignment: CrossAxisAlignment.start,
+     body: Stack(
      children: <Widget>[
+       Container( // container for login's background wallpaper
+         height: double.infinity,
+         width: double.infinity,
+         decoration: BoxDecoration(
+           gradient: LinearGradient(
+             begin: Alignment.topCenter,
+             end: Alignment.bottomCenter,
+             colors: [ // colors for gradient background of login page
+               Color(0xFF64B5F0),
+               Color(0xFF64B5F6),
+               Color(0xFF2196F3),
+               Color(0xFF1976D2)
+             ],
+             stops: [0.1, 0.4, 0.7, 0.9],
+           ),
+         ),
+       ),
        Container(
          child: Stack(
            children: <Widget>[
              Container(
                padding: EdgeInsets.fromLTRB(15.0, 50.0, 30, 0.0),
                child: Text('Create Account',
-               style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+               style: TextStyle(
+                   fontSize: 30.0,
+                   color: Color(0xFF001433),
+                   fontWeight: FontWeight.bold
+               ),
                ),
              ),
            ],
         ),
        ),
        Container(
-         padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+         padding: EdgeInsets.only(top: 100.0, left: 20.0, right: 20.0),
          child: Form(
            key: _formKey,
            child: Column(
@@ -49,9 +70,9 @@ class _RegisterState extends State<Register>{
                    labelStyle: TextStyle(
                      fontFamily: 'Montserrat',
                      fontWeight: FontWeight.bold,
-                     color: Colors.grey),
+                     color: Color(0xFFe6f0ff)),
                    focusedBorder: UnderlineInputBorder(
-                     borderSide: BorderSide(color: Colors.grey)
+                     borderSide: BorderSide(color: Colors.white)
                    )
                  ),
                ),
@@ -64,24 +85,9 @@ class _RegisterState extends State<Register>{
                      labelStyle: TextStyle(
                          fontFamily: 'Montserrat',
                          fontWeight: FontWeight.bold,
-                         color: Colors.grey),
+                         color: Color(0xFFe6f0ff)),
                      focusedBorder: UnderlineInputBorder(
-                         borderSide: BorderSide(color: Colors.grey)
-                     )
-                 ),
-               ),
-               SizedBox(height: 10.0),
-
-               TextFormField(
-                 validator: (val) => val.isEmpty ? 'Please enter a username.' : null,
-                 decoration: InputDecoration(
-                     labelText: 'USERNAME',
-                     labelStyle: TextStyle(
-                         fontFamily: 'Montserrat',
-                         fontWeight: FontWeight.bold,
-                         color: Colors.grey),
-                     focusedBorder: UnderlineInputBorder(
-                         borderSide: BorderSide(color: Colors.grey)
+                         borderSide: BorderSide(color: Colors.white)
                      )
                  ),
                ),
@@ -97,9 +103,9 @@ class _RegisterState extends State<Register>{
                      labelStyle: TextStyle(
                          fontFamily: 'Montserrat',
                          fontWeight: FontWeight.bold,
-                         color: Colors.grey),
+                         color: Color(0xFFe6f0ff)),
                      focusedBorder: UnderlineInputBorder(
-                         borderSide: BorderSide(color: Colors.grey)
+                         borderSide: BorderSide(color: Colors.white)
                      ),
                  ),
                ),
@@ -116,9 +122,9 @@ class _RegisterState extends State<Register>{
                      labelStyle: TextStyle(
                          fontFamily: 'Montserrat',
                          fontWeight: FontWeight.bold,
-                         color: Colors.grey),
+                         color: Color(0xFFe6f0ff)),
                      focusedBorder: UnderlineInputBorder(
-                         borderSide: BorderSide(color: Colors.blue)
+                         borderSide: BorderSide(color: Colors.white)
                      )
                  ),
                ),
@@ -129,7 +135,7 @@ class _RegisterState extends State<Register>{
                  child: Material(
                    borderRadius: BorderRadius.circular(20),
                    shadowColor: Colors.grey,
-                   color: Colors.grey,
+                   color: Color(0xFFe6f0ff),
                    elevation: 7,
                    child: GestureDetector(
                      onTap: () async {
@@ -144,7 +150,7 @@ class _RegisterState extends State<Register>{
                        child: Text(
                          'CREATE ACCOUNT',
                          style: TextStyle(
-                           color: Colors.white,
+                           color: Color(0xFF1976D2),
                            fontWeight: FontWeight.bold,
                            fontFamily: 'Montserrat'
                          ),
@@ -161,7 +167,7 @@ class _RegisterState extends State<Register>{
                  child: Container(
                    decoration: BoxDecoration(
                        border:Border.all(
-                           color: Colors.black,
+                           color: Color(0xFFe6f0ff),
                            style: BorderStyle.solid,
                            width: 1),
                        color: Colors.transparent,
@@ -169,7 +175,7 @@ class _RegisterState extends State<Register>{
                    ),
                    child: InkWell(
                      onTap: () {
-                       Navigator.of(context).pop();
+                       Navigator.pushReplacementNamed(context, "/logout");
                      },
                      child:
 
@@ -177,6 +183,7 @@ class _RegisterState extends State<Register>{
                        child: Text('Login Page',
                            style: TextStyle(
                                fontWeight: FontWeight.bold,
+                               color: Color(0xFFe6f0ff),
                                fontFamily: 'Montserrat')
                        ),
                      ),
