@@ -54,21 +54,21 @@ class _MySchedulePageState extends State<MySchedulePage> with TickerProviderStat
 
     _events = {
 
-      _selectedDay.subtract(Duration(days: 30)): ['Class A0', 'Class B0', 'Class C0'],
-      _selectedDay.subtract(Duration(days: 27)): ['Class A1'],
-      _selectedDay.subtract(Duration(days: 20)): ['Class A2', 'Class B2', 'Class C2', 'Class D2'],
-      _selectedDay.subtract(Duration(days: 16)): ['Class A3', 'Class B3'],
-      _selectedDay.subtract(Duration(days: 10)): ['Class A4', 'Class B4', 'Class C4'],
-      _selectedDay.subtract(Duration(days: 4)): ['Class A5', 'Class B5', 'Class C5'],
-      _selectedDay.subtract(Duration(days: 2)): ['Class A6', 'Class B6'],
-      _selectedDay: ['Class A7', 'Class B7', 'Class C7', 'Class D7'],
-      _selectedDay.add(Duration(days: 1)): ['Class A8', 'Class B8', 'Class C8', 'Class D8'],
-      _selectedDay.add(Duration(days: 3)): Set.from(['Class A9', 'Class A9', 'Class B9']).toList(),
-      _selectedDay.add(Duration(days: 7)): ['Class A10', 'Class B10', 'Class C10'],
-      _selectedDay.add(Duration(days: 11)): ['Class A11', 'Class B11'],
-      _selectedDay.add(Duration(days: 17)): ['Class A12', 'Class B12', 'Class C12', 'Class D12'],
-      _selectedDay.add(Duration(days: 22)): ['Class A13', 'Class B13'],
-      _selectedDay.add(Duration(days: 26)): ['Class A14', 'Class B14', 'Class C14'],
+      _selectedDay.subtract(Duration(days: 30)): ['456 Network Security lab due', 'Workout', 'Survey Financial Aid'],
+      _selectedDay.subtract(Duration(days: 27)): ['Workout'],
+      _selectedDay.subtract(Duration(days: 20)): ['Lab Due', '456 Network Security', 'Workout', 'PS4 Time'],
+      _selectedDay.subtract(Duration(days: 16)): ['456 Homework Due', '362 Quiz'],
+      _selectedDay.subtract(Duration(days: 10)): ['Matlab instruciton', 'Interview', 'Class Project'],
+      _selectedDay.subtract(Duration(days: 4)): ['Meet and greet', '456 Network Security', 'Chipolte Coupon Expires'],
+      _selectedDay.subtract(Duration(days: 2)): ['Webinar', 'Workout'],
+      _selectedDay: ['Presentation', 'Study for Final 335', 'Workout', 'Game night'],
+      _selectedDay.add(Duration(days: 1)): ['Drop off Box', '335 Project Due', 'Creative Class', 'Relaxing time'],
+      _selectedDay.add(Duration(days: 3)): Set.from(['Start Essay', '323 Proj Due', 'Meeting with Prof']).toList(),
+      _selectedDay.add(Duration(days: 7)): ['Workout', 'Questionairre', 'Fight night UFC'],
+      _selectedDay.add(Duration(days: 11)): ['Work on Bike', '456 Network Security'],
+      _selectedDay.add(Duration(days: 17)): ['456 Network Security', 'Homework 10 335', 'Ride with friends', 'Meeting'],
+      _selectedDay.add(Duration(days: 22)): ['Meeting', 'Dr.Appt Beach Hos.'],
+      _selectedDay.add(Duration(days: 26)): ['Car Appointment', 'Pizza Party CPSC102', 'Netflix Special'],
     };
 
     _selectedEvents = _events[_selectedDay] ?? [];

@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                                "Agenda For Today",
+                                "Agenda for the Week",
                                 style: TextStyle(
                                     fontFamily: 'OpenSans',
                                     fontSize: 24,
@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                       stream: Firestore.instance.collection('plan').where('User', isEqualTo: user.uid)
                           .where('date',
                           isGreaterThan: Timestamp.now().toDate(),
-                          isLessThan: Timestamp.now().toDate().add(new Duration(days: 1))
+                          isLessThan: Timestamp.now().toDate().add(new Duration(days: 7))
                       ).snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.data == null) return Container();
