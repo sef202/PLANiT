@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planit_sprint2/authenticate/register.dart';
 import 'package:planit_sprint2/authenticate/user_model.dart';
 import 'package:planit_sprint2/home/classDetail.dart';
 import 'package:planit_sprint2/home/editClass.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         home: Wrapper(),
         routes: {
           "/login": (_) => new MyHomePage(),
-          "/register": (_) => new MyHomePage(),
+          "/createAcc": (_) => new Register(),
+          "/register": (_) => new LoginPage(),
           "/logout": (_) => new LoginPage(),
           "/TaskPage": (_) => new TodoList(),
           "/exitTask": (_) => new MyHomePage(),

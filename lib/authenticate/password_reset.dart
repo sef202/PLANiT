@@ -25,7 +25,7 @@ class _ForgotPassState extends State<ForgotPass> {
         Container(                     // container for username box field
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: Color(0xFFF2F4F4),
+            color: Color(0xFFe6f0ff),
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow (
@@ -49,7 +49,7 @@ class _ForgotPassState extends State<ForgotPass> {
               contentPadding: EdgeInsets.only(left: 20.0),
               hintText: 'Enter email address',
               hintStyle: TextStyle(
-                color: Colors.black12,
+                color: Colors.black26,
                 fontFamily: 'OpenSans',
               ),
             ),
@@ -80,11 +80,11 @@ class _ForgotPassState extends State<ForgotPass> {
           shape: RoundedRectangleBorder(
             borderRadius:  BorderRadius.circular(30.0),
           ),
-          color: Colors.black87,
+          color: Color(0xFFe6f0ff),
           child: Text(
             'SUBMIT',
             style: TextStyle(
-              color: Color(0xFFF2F4F4),
+              color: Color(0xFF2196F3),
               letterSpacing: 1.5,
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class _ForgotPassState extends State<ForgotPass> {
             child: Text(
               'Return to Login',
               style: TextStyle(
-                color: Colors.black87,
+                color: Color(0xFF001f4d),
                 fontFamily: 'OpenSans',
                 fontWeight: FontWeight.bold,
               ),
@@ -180,10 +180,10 @@ class _ForgotPassState extends State<ForgotPass> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [ // colors for gradient background of login page
-                  Color(0xFFF2F4F4),
-                  Color(0xFFE5E8E8),
-                  Color(0xFFCCD1D1),
-                  Color(0xFFB2BABB)
+                  Color(0xFF64B5F0),
+                  Color(0xFF64B5F6),
+                  Color(0xFF2196F3),
+                  Color(0xFF1976D2)
                 ],
                 stops: [0.1, 0.4, 0.7, 0.9],
               ),
@@ -206,7 +206,7 @@ class _ForgotPassState extends State<ForgotPass> {
                     Text(
                       'Reset Password',
                       style: TextStyle(
-                        color: Colors.black87,
+                        color: Color(0xFF001f4d),
                         fontFamily: 'OpenSans',
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
